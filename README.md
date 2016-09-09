@@ -11,7 +11,7 @@ from pymobird import Pymobird
 
 bird = Pymobird(ak='your_memobird_ak')
 
-user_id = bird.get_user_id(device_id='your_device_id_by_press_twice', 'some_name')
+user_id = bird.get_user_id(device_id='your_device_id_by_press_twice', user_identifying='some_name')
 print(user_id)
 
 content_id = bird.print_text(device_id, user_id, "hello pymobird!")
