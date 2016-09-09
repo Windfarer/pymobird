@@ -1,8 +1,8 @@
 # pymobird
 A python client for memobird printer
 
-## Required
-Python 3
+## Requirements
+Python 3.4+
 
 ## Quick Example
 
