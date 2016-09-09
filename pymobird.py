@@ -108,3 +108,23 @@ class Pymobird(object):
         return resp.json()["printflag"] == 1
 
 
+class SimplePymobird(object):
+    """for single device"""
+
+    def __init__(self, ak, device_id, user_identifying):
+        self._bird = Pymobird(ak)
+        self.device_id = device_id
+        self.user_id = self._bird.get_user_id(self.device_id, user_identifying)
+
+    def print_text(self, text):
+        return self._bird.print_text(self.device_id, self.user_id, text)
+
+    def print_image(self, image):
+        return self._bird.print_image(self.device_id, self.user_id, image)
+
+    def print_multi_part_content(self, content):
+        return self._bird.print_multi_part_content(self.device_id, self.user_id, content)
+
+    def check_printed(self, content_id):
+        return self._bird.check_printed(content_id)
+
