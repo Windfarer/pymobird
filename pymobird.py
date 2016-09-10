@@ -35,13 +35,15 @@ class Content(object):
             if content_type == "T":
                 if not index == last and not data.endswith("\n"):
                     data += "\n"
-                encoded.append("T:"+b64encode(data.encode("GBK")).decode("ascii"))
+                encoded.append("T:"+b64encode(data.encode("GBK", errors="ignore")).decode("ascii"))
             elif content_type == "P":
                 encoded.append("P:"+b64encode(data).decode("ascii"))
         return "|".join(encoded)
 
 
 class Pymobird(object):
+    """for advanced usage, use this directly"""
+
     BASE_URL = "http://open.memobird.cn/home"
     _headers = {
         "Content-Type": "application/json",
@@ -57,7 +59,7 @@ class Pymobird(object):
     def _url(self, path):
         return self.BASE_URL + path
 
-    def get_user_id(self, device_id, user_identifying):
+    def get_user_id(self, device_id, user_identifying=""):
         path = "/setuserbind"
         data = {
             "ak": self._ak,
@@ -111,7 +113,7 @@ class Pymobird(object):
 class SimplePymobird(object):
     """for single device"""
 
-    def __init__(self, ak, device_id, user_identifying):
+    def __init__(self, ak, device_id, user_identifying=""):
         self._bird = Pymobird(ak)
         self.device_id = device_id
         self.user_id = self._bird.get_user_id(self.device_id, user_identifying)
