@@ -46,5 +46,4 @@ is_printed = bird.check_printed(content_id)
 print(is_printed)
 
 ```
-
-For advanced usage, use Pymobird class directly. 
+Besides, using ```Pymobird``` class directly for advanced usage. 
