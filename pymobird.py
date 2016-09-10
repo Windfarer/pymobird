@@ -4,6 +4,8 @@ from PIL import Image
 from io import BytesIO
 import requests
 
+__version__ = "0.1.0"
+
 _current_timestamp = lambda: datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
