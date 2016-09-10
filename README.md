@@ -16,7 +16,7 @@ pip install pymobird
 from pymobird import SimplePymobird
 
 # init client
-bird = SimplePymobird(ak='your_memobird_ak', 'your_device_id_by_press_twice')
+bird = SimplePymobird(ak='your_memobird_ak', device_id='your_device_id_by_press_twice')
 
 
 # print text
