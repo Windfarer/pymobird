@@ -3,23 +3,48 @@ A python client for memobird printer
 
 ## Requirements
 Python 3.4+
+## Installation
+
+```
+pip install pymobird
+```
+
 
 ## Quick Example
 
 ```
-from pymobird import Pymobird
+from pymobird import SimplePymobird
 
-bird = Pymobird(ak='your_memobird_ak')
+# init client
+bird = SimplePymobird(ak='your_memobird_ak', 'your_device_id_by_press_twice')
 
-device_id = 'your_device_id_by_press_twice'
 
-user_id = bird.get_user_id(device_id, user_identifying='some_name')
-print(user_id)
+# print text
+bird.print_text("hello pymobird!")
 
-content_id = bird.print_text(device_id, user_id, "hello pymobird!")
-print(content_id)
 
-# wait for a second, then
-print(bird.check_printed(content_id))
+# print image
+image_file_path = "./Hello.jpg"
+bird.print_image(image_file)
+# or
+image_fp = open("./hello.jpg")
+bird.print_image(image_fp)
+image.close()
+
+
+# print multi part content
+from pymobird import Content
+content = Content()
+content.add_image(image_fp)
+content.add_text("test text")
+bird.print_multi_part_content(content)
+
+
+# check content print status
+content_id = bird.print_text("hello pymobird!")  # print and get content_id
+is_printed = bird.check_printed(content_id)  
+print(is_printed)
 
 ```
+
+For advanced usage, use Pymobird class directly. 
