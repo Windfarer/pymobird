@@ -16,8 +16,8 @@ class Content(object):
     def add_text(self, text):
         self.parts.append(("T", text))
 
-    def add_image(self, raw_file):
-        image = Image.open(raw_file)
+    def add_image(self, fp_or_file_path):
+        image = Image.open(fp_or_file_path)
         image = image.transpose(Image.FLIP_TOP_BOTTOM)
         width, height = image.size
         if width > self.IMAGE_MAX_WIDTH:
