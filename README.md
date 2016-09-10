@@ -12,7 +12,7 @@ pip install pymobird
 
 ## Quick Example
 
-```
+```python
 from pymobird import SimplePymobird
 
 # init client
