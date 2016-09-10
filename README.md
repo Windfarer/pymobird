@@ -42,6 +42,7 @@ bird.print_multi_part_content(content)
 
 # check content print status
 content_id = bird.print_text("hello pymobird!")  # print and get content_id
+# wait one second, then
 is_printed = bird.check_printed(content_id)  
 print(is_printed)
 
