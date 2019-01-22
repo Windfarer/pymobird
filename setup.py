@@ -3,7 +3,7 @@ from pymobird import __version__
 setup(
     name = "pymobird",
     version = __version__,
-    packages = find_packages(),
+    py_modules = ['pymobird'],
     install_requires = ['requests', 'Pillow'],
     author = "windfarer",
     author_email = "windfarer@gmail.com",
