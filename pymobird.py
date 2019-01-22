@@ -4,10 +4,23 @@ from PIL import Image
 from io import BytesIO
 import requests
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 _current_timestamp = lambda: datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+class APIError(Exception):
+    def __init__(self, res_code, res_error):
+        self.res_code = res_code
+        self.res_error = res_error
+
+    def __str__(self):
+        return "res_code: {} res_error: {}".format(self.res_code, self.res_error)
+
+def check_api_error(resp):
+    resp.raise_for_status()
+    data = resp.json()
+    if data["showapi_res_code"] != 1:
+        raise APIError(data["showapi_res_code"], data["showapi_res_error"])
 
 class Content(object):
     IMAGE_MAX_WIDTH = 384
@@ -70,7 +83,7 @@ class Pymobird(object):
             "useridentifying": user_identifying,
         }
         resp = self._session.get(self._url(path), params=data, headers=self._headers)
-        resp.raise_for_status()
+        check_api_error(resp)
         user_id = resp.json()["showapi_userid"]
         return user_id
 
@@ -84,7 +97,7 @@ class Pymobird(object):
             "userID": user_id,
         }
         resp = self._session.post(self._url(path), json=data, headers=self._headers)
-        resp.raise_for_status()
+        check_api_error(resp)
         content_id = resp.json()["printcontentid"]
         return content_id
 
@@ -101,6 +114,20 @@ class Pymobird(object):
     def print_multi_part_content(self, device_id, user_id, content):
         return self._print(device_id, user_id, content)
 
+    def print_url(self, device_id, user_id, url):
+        path = "/printpaperFromUrl"
+        data = {
+            "ak": self._ak,
+            "timestamp": _current_timestamp(),
+            "printUrl": url,
+            "memobirdID": device_id,
+            "userID": user_id,
+        }
+        resp = self._session.post(self._url(path), json=data, headers=self._headers)
+        check_api_error(resp)
+        content_id = resp.json()["printcontentid"]
+        return content_id
+
     def check_printed(self, content_id):
         path = "/getprintstatus"
         resp = self._session.get(self._url(path),
@@ -108,7 +135,7 @@ class Pymobird(object):
                                          "timestamp": _current_timestamp(),
                                          "printcontentid": content_id},
                                  headers=self._headers)
-        resp.raise_for_status()
+        check_api_error(resp)
         return resp.json()["printflag"] == 1
 
 
@@ -128,6 +155,9 @@ class SimplePymobird(object):
 
     def print_multi_part_content(self, content):
         return self._bird.print_multi_part_content(self.device_id, self.user_id, content)
+
+    def print_url(self, url):
+        return self._bird.print_url(self.device_id, self.user_id, url)
 
     def check_printed(self, content_id):
         return self._bird.check_printed(content_id)
