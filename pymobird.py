@@ -57,7 +57,7 @@ class Content(object):
 
 
 class Pymobird(object):
-    """for advanced usage, use this directly"""
+    """for advanced usage (multiple devices), use this class directly"""
 
     BASE_URL = "http://open.memobird.cn/home"
     _headers = {
