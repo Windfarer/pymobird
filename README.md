@@ -31,6 +31,8 @@ image_fp = open("./hello.jpg")
 bird.print_image(image_fp)
 image.close()
 
+# print html by url
+bird.print_url("http://example.com/a.html")
 
 # print multi part content
 from pymobird import Content
