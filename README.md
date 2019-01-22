@@ -1,6 +1,8 @@
 # pymobird
 A python client for memobird printer
 
+[![PyPI version](https://badge.fury.io/py/pymobird.svg)](https://badge.fury.io/py/pymobird)
+
 ## Requirements
 Python 3.4+
 ## Installation
